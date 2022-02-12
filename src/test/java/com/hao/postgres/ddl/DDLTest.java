@@ -1,7 +1,7 @@
-package com.hao.postgres;
+package com.hao.postgres.ddl;
 
 
-import com.hao.postgres.util.MetaCommandRunner;
+import com.hao.postgres.util.CommandRunner;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -12,11 +12,11 @@ class DDLTest {
 
 
     @Autowired
-    MetaCommandRunner metaCommandRunner;
+    CommandRunner commandRunner;
 
     @Test
     public void schema() {
-        metaCommandRunner.describeTable("organizations");
+        commandRunner.describeTable("organizations");
         /*
         postgres=# \d organizations
                                           Table "public.organizations"

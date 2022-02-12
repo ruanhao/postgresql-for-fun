@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @Slf4j
-public class MetaCommandRunner {
+public class CommandRunner {
 
     @Value("#{'${spring.datasource.url}'.substring(5)}")
     String url;
@@ -33,6 +33,7 @@ public class MetaCommandRunner {
     String psqlCommand(String cli) {
         String command = String.format("psql %s -c '%s'", fqdn(), cli);
         log.info("Full psql command: {}", command);
+        log.info("\n\n============= {} =============\n", cli);
         return command;
     }
 
@@ -93,6 +94,10 @@ public class MetaCommandRunner {
 
     public void describeTable(String tblName) {
         psqlp("\\d " + tblName);
+    }
+
+    public void selectAll(String tblName) {
+        psqlp(String.format("select * from %s;", tblName));
     }
 
 
