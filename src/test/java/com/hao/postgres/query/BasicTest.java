@@ -29,12 +29,6 @@ public class BasicTest {
     @Autowired
     CommandRunner commandRunner;
 
-
-    @PostConstruct
-    public void setUp() {
-        commandRunner.selectAll("person");
-    }
-
     @Test
     public void findAll() {
         var all = personRepository.findAll();

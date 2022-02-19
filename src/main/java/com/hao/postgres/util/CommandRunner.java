@@ -6,6 +6,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.concurrent.Executors;
 import java.util.function.Consumer;
+import java.util.stream.Collectors;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -37,10 +38,6 @@ public class CommandRunner {
         return command;
     }
 
-    public void psqlp(String cli) {
-        executep(psqlCommand(cli));
-    }
-
     public String psql(String cli) {
         return execute(psqlCommand(cli));
     }
@@ -63,43 +60,22 @@ public class CommandRunner {
                 (line) -> {
                     sb.append(line);
                     sb.append(System.getProperty("line.separator"));
+                    System.out.println(line);
                 });
         Executors.newSingleThreadExecutor().submit(streamGobbler);
         int exitCode = process.waitFor();
-        assert exitCode == 0;
+        String errorMessage = new BufferedReader(new InputStreamReader(process.getErrorStream())).lines().collect(Collectors.joining("\n"));
+        assert exitCode == 0 : "[" + errorMessage + "]";
         return sb.toString();
     }
 
-    @SneakyThrows
-    public void executep(String command) {
-        boolean isWindows = System.getProperty("os.name")
-                .toLowerCase().startsWith("windows");
-        ProcessBuilder builder = new ProcessBuilder();
-        if (isWindows) {
-            builder.command("cmd.exe", "/c", command);
-        } else {
-            builder.command("sh", "-c", command);
-        }
-        builder.directory(new File(System.getProperty("user.home")));
-        Process process = builder.start();
-        StreamGobbler streamGobbler =
-                new StreamGobbler(process.getInputStream(), System.out::println);
-        Executors.newSingleThreadExecutor().submit(streamGobbler);
-        int exitCode = process.waitFor();
-        assert exitCode == 0;
-    }
 
     // UTIL FUNCTIONS:
 
 
     public void describeTable(String tblName) {
-        psqlp("\\d " + tblName);
+        psql("\\d " + tblName);
     }
-
-    public void selectAll(String tblName) {
-        psqlp(String.format("select * from %s;", tblName));
-    }
-
 
     private static class StreamGobbler implements Runnable {
         private InputStream inputStream;
