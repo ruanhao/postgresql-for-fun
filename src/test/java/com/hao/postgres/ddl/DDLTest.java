@@ -16,7 +16,8 @@ class DDLTest {
 
     @Test
     public void schema() {
-        commandRunner.describeTable("organizations");
+        var output = commandRunner.describeTable("organizations");
+        assert output.contains("\"organizations_ukey_tenant_id_name\" UNIQUE CONSTRAINT, btree (tenant_id, name)");
         /*
         postgres=# \d organizations
                                           Table "public.organizations"

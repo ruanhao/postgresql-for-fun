@@ -1,4 +1,4 @@
-package com.hao.postgres.query;
+package com.hao.postgres.jpa;
 
 import com.hao.postgres.jpa.entity.Person;
 import com.hao.postgres.jpa.repo.MalePersonRepository;

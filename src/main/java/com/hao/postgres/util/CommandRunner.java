@@ -32,7 +32,7 @@ public class CommandRunner {
     }
 
     String psqlCommand(String cli) {
-        String command = String.format("psql %s -c '%s'", fqdn(), cli);
+        String command = String.format("psql %s -c \"%s\"", fqdn(), cli);
         log.info("Full psql command: {}", command);
         log.info("\n\n============= {} =============\n", cli);
         return command;
@@ -73,8 +73,8 @@ public class CommandRunner {
     // UTIL FUNCTIONS:
 
 
-    public void describeTable(String tblName) {
-        psql("\\d " + tblName);
+    public String describeTable(String tblName) {
+        return psql("\\d " + tblName);
     }
 
     private static class StreamGobbler implements Runnable {

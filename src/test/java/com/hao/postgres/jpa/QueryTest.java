@@ -1,11 +1,10 @@
-package com.hao.postgres.query;
+package com.hao.postgres.jpa;
 
 import com.hao.postgres.dto.IdAndName;
 import com.hao.postgres.jpa.entity.Person;
 import com.hao.postgres.jpa.repo.PersonRepository;
 import com.hao.postgres.util.CommandRunner;
 import java.util.List;
-import javax.annotation.PostConstruct;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.LazyInitializationException;
 import org.junit.jupiter.api.Test;
@@ -21,7 +20,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 @Slf4j
 @Sql("/sql/person.sql")
-public class BasicTest {
+public class QueryTest {
 
     @Autowired
     PersonRepository personRepository;
