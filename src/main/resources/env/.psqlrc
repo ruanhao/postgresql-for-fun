@@ -1,0 +1,28 @@
+-- Prevent noisy loading of psqlrc file
+\set QUIET yes
+
+\x auto
+
+-- Set client encoding
+\encoding unicode
+
+\set PROMPT1 '(%n@%M:%>) [%/] > '
+\set PROMPT2 ''
+
+\set COMP_KEYWORD_CASE upper
+
+-- Set all null fields to NULL
+\pset null 'NULL'
+
+-- Set the command history file names for each host and database
+\set HISTFILE ~/.psql_history- :HOST - :DBNAME
+\set HISTSIZE 2000
+-- Get rid of duplicates in history
+\set HISTCONTROL ignoredups
+
+-- Show timing info for queries
+\timing
+
+
+-- Useful only in interactive mode. Add custom alias sets below.
+\ir .psqlrc-admin
