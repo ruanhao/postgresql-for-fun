@@ -106,7 +106,7 @@ public class QueryTest {
         var sqlV2 = "select a.ename, b.ename from emp as a join emp as b on a.mgr = b.empno;";
         var outputV1 = commandRunner.psql(sqlV1);
         var outputV2 = commandRunner.psql(sqlV2);
-        assert Objects.equals(outputV1, outputV2);
+        assert Objects.equals(outputV1.replaceFirst("Time.*", ""), outputV2.replaceFirst("Time.*", ""));
         assert outputV1.contains("JAMES  | BLAKE");
         assert !outputV1.contains("KING  |");  // KING has no manager, see self outer join
     }
@@ -196,7 +196,7 @@ public class QueryTest {
     /**
      * 每个部门平均薪水工资等级
      */
-    void subSelect1() {
+    void subQuery1() {
         val sql = "\n" +
                 "select \n" +
                 " ss.dname, s.grade\n" +
@@ -223,7 +223,7 @@ public class QueryTest {
     /**
      * 高于平均薪资的员工
      */
-    void subSelect2() {
+    void subQuery2() {
         val sql = "select * from emp e where e.sal > (select avg(sal) from emp);";
         assert commandRunner.psql(sql).contains("6 rows");
     }
@@ -232,7 +232,7 @@ public class QueryTest {
     /**
      * 将查询结果排列在一起
      */
-    void subSelect3() {
+    void subQuery3() {
         val sql = "select (select count(*) from emp), (select round(avg(sal)) from emp);";
         assert commandRunner.psql(sql).contains("1 row");
     }
@@ -240,7 +240,7 @@ public class QueryTest {
     /**
      * 部门最高薪水的员工姓名
      */
-    void subSelect4() {
+    void subQuery4() {
         var sql = "\n" +
                 "select \n" +
                 "    e.ename from emp e \n" +
@@ -263,19 +263,19 @@ public class QueryTest {
      *  - where 后
      */
     @Test
-    public void subSelect() {
-        subSelect1(); // after from
-        subSelect2(); // after where
-        subSelect3(); // after select
-        subSelect4(); // after where
-        subSelect5(); // after from
-        subSelect6(); // multiple sub select (after where)
+    public void subQuery() {
+        subQuery1(); // after from
+        subQuery2(); // after where
+        subQuery3(); // after select
+        subQuery4(); // after where
+        subQuery5(); // after from
+        subQuery6(); // multiple sub select (after where)
     }
 
     /**
      * 比普通员工最高工资还高的领导
      */
-    void subSelect6() {
+    void subQuery6() {
         val sql = "\n" +
                 "select \n" +
                 "    * \n" +
@@ -303,7 +303,7 @@ public class QueryTest {
     /**
      * 薪水在部门平均工资之上的人员名称
      */
-    void subSelect5() {
+    void subQuery5() {
         val sql = "\n" +
                 "select \n" +
                 "    e.ename \n" +

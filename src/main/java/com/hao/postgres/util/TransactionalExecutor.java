@@ -7,8 +7,38 @@ import org.springframework.transaction.annotation.Transactional;
 @Component
 public class TransactionalExecutor {
 
-    @Transactional(propagation = Propagation.REQUIRED)
+    @Transactional
     public void required(final Runnable runnable) {
+        runnable.run();
+    }
+
+    @Transactional(propagation = Propagation.NEVER)
+    public void never(final Runnable runnable) {
+        runnable.run();
+    }
+
+    @Transactional(propagation = Propagation.NOT_SUPPORTED)
+    public void notSupported(final Runnable runnable) {
+        runnable.run();
+    }
+
+    @Transactional(propagation = Propagation.SUPPORTS)
+    public void supports(final Runnable runnable) {
+        runnable.run();
+    }
+
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    public void requiresNew(final Runnable runnable) {
+        runnable.run();
+    }
+
+    @Transactional(propagation = Propagation.NESTED)
+    public void nested(final Runnable runnable) {
+        runnable.run();
+    }
+
+    @Transactional(propagation = Propagation.MANDATORY)
+    public void mandatory(final Runnable runnable) {
         runnable.run();
     }
 }
