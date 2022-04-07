@@ -29,7 +29,7 @@ insert into person (name, age, gender, country, company) values ('Florence', 26,
 insert into person (name, age, gender, country, company) values ('Meriel', 34, 'Male', 'Russia', 'Wintheiser, Goodwin and Ledner');
 insert into person (name, age, gender, country, company) values ('Elaine', 29, 'Male', 'China', 'Mann-McCullough');
 insert into person (name, age, gender, country, company) values ('Muhammad', 45, 'Female', 'China', 'Hane and Sons');
-insert into person (name, age, gender, country, company) values ('Cletus', 43, 'Male', 'China', 'Schroeder Group');
+insert into person (name, age, gender, country, company) values ('Cletus', 43, 'Male', 'China', 'Schroeder Group Ardra');
 insert into person (name, age, gender, country, company) values ('Elton', 46, 'Male', 'China', 'Funk-Homenick');
 insert into person (name, age, gender, country, company) values ('Wainwright', 23, 'Female', 'China', 'Robel, Stroman and Lindgren');
 insert into person (name, age, gender, country, company) values ('Kaspar', 38, 'Female', 'China', 'Lynch-Torp');

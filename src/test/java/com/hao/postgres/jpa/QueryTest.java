@@ -4,9 +4,11 @@ import com.hao.postgres.dto.IdAndName;
 import com.hao.postgres.jpa.entity.Person;
 import com.hao.postgres.jpa.repo.PersonRepository;
 import com.hao.postgres.util.CommandRunner;
+import com.hao.postgres.util.SpecificationUtils;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.LazyInitializationException;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -122,5 +124,12 @@ public class QueryTest {
         assertEquals(2, personWithEliInName.size());
         assertTrue(personWithEliInName.stream().allMatch(p -> p.getName().toLowerCase().contains("eli")));
     }
+
+    @Test
+    public void searchAnnotation() {
+        List<Person> people = personRepository.findAll(SpecificationUtils.search("Ardra", Person.class));
+        Assertions.assertEquals(2, people.size());
+    }
+
 
 }

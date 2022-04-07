@@ -1,5 +1,6 @@
 package com.hao.postgres.jpa.entity;
 
+import com.hao.postgres.annotation.Searchable;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -29,14 +30,17 @@ public class Person {
     @Id
     long id;
 
+    @Searchable
     String name;
 
     int age;
 
     String gender;
 
+
     String country;
 
+    @Searchable
     String company;
 
 }
