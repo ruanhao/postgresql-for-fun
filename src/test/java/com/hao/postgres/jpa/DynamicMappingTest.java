@@ -2,7 +2,9 @@ package com.hao.postgres.jpa;
 
 import com.hao.postgres.jpa.entity.Person;
 import com.hao.postgres.jpa.repo.MalePersonRepository;
+import com.hao.postgres.jpa.repo.NetworkRepository;
 import com.hao.postgres.jpa.repo.PersonRepository;
+import com.hao.postgres.util.SecurityContextUtils;
 import com.hao.postgres.util.TransactionalExecutor;
 import java.util.Objects;
 import javax.persistence.EntityManager;
@@ -16,6 +18,7 @@ import org.springframework.test.context.jdbc.Sql;
 
 @SpringBootTest
 @Sql("/sql/person.sql")
+@Sql("/sql/networks.sql")
 public class DynamicMappingTest {
 
     @Autowired
@@ -23,6 +26,9 @@ public class DynamicMappingTest {
 
     @Autowired
     PersonRepository personRepository;
+
+    @Autowired
+    NetworkRepository networkRepository;
 
     @Autowired
     TransactionalExecutor transactionalExecutor;
@@ -58,5 +64,17 @@ public class DynamicMappingTest {
             session().disableFilter(Person.AGE_FILTER_NAME);
         });
 
+    }
+
+
+    @Test
+    public void testMultiTenant() {
+        SecurityContextUtils.setRequestContext("cisco");
+        Assertions.assertTrue(networkRepository.findByName("Site-Cisco").size() == 1);
+        SecurityContextUtils.clear();
+
+        SecurityContextUtils.setRequestContext("apple");
+        Assertions.assertTrue(networkRepository.findByName("Site-Cisco").isEmpty());
+        SecurityContextUtils.clear();
     }
 }

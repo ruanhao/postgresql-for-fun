@@ -22,6 +22,7 @@ public interface PersonRepository extends BaseRepository<Person, Long> {
             value = "select * from person where lower(name) like concat('%', lower(:search), '%') or lower(company) like concat('%', lower(:search), '%')",
             nativeQuery = true)  // By default, the query definition uses JPQL.
                                  // 'nativeQuery = true' indicates to use native SQL (postgres)
+
     Page<Person> search(String search, Pageable pageable);
 
 }
