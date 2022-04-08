@@ -20,7 +20,7 @@ import org.hibernate.annotations.Filter;
 )
 @Entity
 @Table(name = "person")
-public class Person {
+public class Person extends MyEntity {
 
     public static final String AGE_FILTER_NAME = "personAgeFilter";
     public static final String AGE_FILTER_ARGUMENT_NAME = "ageLimit";
@@ -32,6 +32,8 @@ public class Person {
 
     @Searchable
     String name;
+
+    String firstName;
 
     int age;
 
