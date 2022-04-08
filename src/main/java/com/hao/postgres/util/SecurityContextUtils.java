@@ -1,6 +1,7 @@
 package com.hao.postgres.util;
 
 import com.hao.postgres.dto.RequestContext;
+import java.util.Objects;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -17,11 +18,7 @@ public class SecurityContextUtils {
     }
 
     public static RequestContext getRequestContext() {
-        RequestContext requestContext = contextOfCurrentThread.get();
-        if (requestContext == null) {
-            return RequestContext.of("non-tenant");
-        }
-        return requestContext;
+        return Objects.requireNonNull(contextOfCurrentThread.get(), "Request context is not available");
     }
 
     public static void clear() {

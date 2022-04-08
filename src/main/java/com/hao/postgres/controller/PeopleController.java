@@ -5,6 +5,7 @@ import com.hao.postgres.dto.PersonDto;
 import com.hao.postgres.jpa.entity.Person;
 import com.hao.postgres.jpa.repo.PersonRepository;
 import com.hao.postgres.util.DbUtils;
+import com.hao.postgres.util.SecurityContextUtils;
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.sql.DataSource;
@@ -46,7 +47,7 @@ public class PeopleController {
 
     // curl -H 'x-tenant-id: cisco' 'localhost:8080/person?sort=first-name' | jq
     public List<PersonDto> query(Pageable pageable) {
-        log.info("Getting person ...");
+        log.info("Qeuring person [{}]", SecurityContextUtils.getRequestContext());
         return personRepository.findAll(pageable).stream()
                 .map(p -> mapper.map(p, PersonDto.class)).collect(Collectors.toList());
     }
@@ -55,7 +56,6 @@ public class PeopleController {
     @ClassMapping(dtoClass = PersonDto.class, entityClass = Person.class)
     // curl -H 'x-tenant-id: cisco' 'localhost:8080/person/class-mapping?sort=nick-name' | jq
     public List<PersonDto> queryWithClassMapping(Pageable pageable) {
-        log.info("Getting person ...");
         return personRepository.findAll(pageable).stream()
                 .map(p -> mapper.map(p, PersonDto.class)).collect(Collectors.toList());
     }

@@ -14,9 +14,8 @@ public class LoggingInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        log.info("received request: {} {} in tenant {}", request.getMethod(), request.getRequestURI(),
-            SecurityContextUtils.getTenantId());
-        log.debug("request context is {}", SecurityContextUtils.getRequestContext());
+        log.info("Received request: {} {} [{}]", request.getMethod(), request.getRequestURI(),
+            SecurityContextUtils.getRequestContext());
         startTime.set(System.currentTimeMillis());
         return true;
     }
@@ -26,14 +25,14 @@ public class LoggingInterceptor implements HandlerInterceptor {
         long duration = System.currentTimeMillis() - startTime.get();
         startTime.remove();
         if(duration > 3000) {
-            log.warn("returning response: {} {} {} in tenant {}, slow api handling has token {} ms",
+            log.warn("Response: {} {} {} [{}], slow api handling has token {} ms",
                 request.getMethod(), request.getRequestURI(), response.getStatus(),
-                SecurityContextUtils.getTenantId(),
+                SecurityContextUtils.getRequestContext(),
                 duration);
         } else {
-            log.info("returning response: {} {} {} in tenant {}",
+            log.info("Response: {} {} {} [{}]",
                 request.getMethod(), request.getRequestURI(), response.getStatus(),
-                SecurityContextUtils.getTenantId());
+                SecurityContextUtils.getRequestContext());
         }
     }
 

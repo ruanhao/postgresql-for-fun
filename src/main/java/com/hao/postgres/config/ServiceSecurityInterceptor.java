@@ -17,8 +17,9 @@ public class ServiceSecurityInterceptor implements HandlerInterceptor {
         String tenantId = request.getHeader("x-tenant-id");
         if (StringUtils.hasText(tenantId)) {
             SecurityContextUtils.setRequestContext(tenantId);
+        } else {
+            SecurityContextUtils.setRequestContext("default");
         }
-
         return true;
     }
 
