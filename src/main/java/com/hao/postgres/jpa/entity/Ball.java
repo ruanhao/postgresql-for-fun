@@ -13,15 +13,13 @@ import lombok.experimental.Accessors;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "accounts")
+@Table(name = "balls")
 @Builder
-public class Account {
+public class Ball {
 
     @Id
     long id;
 
-    String name;
-
-    long balance;
+    String color;
 
 }
